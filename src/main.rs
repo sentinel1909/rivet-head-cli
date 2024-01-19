@@ -45,7 +45,7 @@ async fn main() -> Result<(), Error> {
     match args.verb {
         verb if verb == "get" => {
             let res = client
-                .get("https://rivet-head-api.shuttleapp.rs/api/diary")
+                .get("https://api.rivet-head.app/diary")
                 .headers(construct_apikey_header(args.key))
                 .send()
                 .await?;
@@ -63,7 +63,7 @@ async fn main() -> Result<(), Error> {
             params.insert("album_content", args.album);
             params.insert("thoughts_content", args.thoughts);
             let res = client
-                .post("https://rivet-head-api.shuttleapp.rs/api/diary/new")
+                .post("https://api.rivet-head.app/diary/new")
                 .headers(construct_apikey_header(args.key))
                 .form(&params)
                 .send()
@@ -76,6 +76,7 @@ async fn main() -> Result<(), Error> {
             writeln!(stdout, "Body: {:?}", body).expect("Unable to write to stdout");
         }
 
+        // handle incorrectly spelled verbs
         _ => {
             let mut stdout = io::stdout();
             writeln!(stdout, "Invalid verb, enter get, post, put or delete")
